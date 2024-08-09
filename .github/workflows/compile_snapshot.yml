@@ -10,9 +10,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-#    environment:
-#      name: development
-#      url: https://repo.andrei1058.dev
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK
@@ -33,3 +30,14 @@ jobs:
           mvn versions:update-child-modules
           mvn clean install -s ci_settings.xml
           echo "UPDATE_VERSION=$UPDATE_VERSION" >> $GITHUB_ENV
+      
+      - name: List files
+        run: ls -R target
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: Bedwars1058-${{ env.UPDATE_VERSION }}-SNAPSHOT
+          path: |
+            */target/*.jar
+            target/*.jar
