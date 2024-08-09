@@ -32,12 +32,18 @@ jobs:
           echo "UPDATE_VERSION=$UPDATE_VERSION" >> $GITHUB_ENV
       
       - name: List files
-        run: ls -R target
+        run: |
+          echo "Current directory:"
+          pwd
+          echo "Directory contents:"
+          ls -R
+          echo "Find .jar files:"
+          find . -name "*.jar"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
           name: Bedwars1058-${{ env.UPDATE_VERSION }}-SNAPSHOT
           path: |
-            */target/*.jar
-            target/*.jar
+            **/target/*.jar
+            ** /*.jar
